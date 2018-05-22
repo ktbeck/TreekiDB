@@ -8,6 +8,8 @@
     <string name="journal">Journal</string>
     <string name="logout">Logout</string>
     <string name="today">How was your day?</string>
+    <string name="tags">Tags:</string>
+    <string name="comma_separated">Comma separated</string>
 
     <string-array name="rating">
         <item>1</item>

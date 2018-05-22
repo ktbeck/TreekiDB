@@ -21,7 +21,10 @@ import java.util.Calendar;
 public class Journal extends AppCompatActivity {
 
     private EditText answer_edit;
+    private EditText tags_edit;
     private String answer;
+    private String tag_string;
+    private String[] tags;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
     private static final String TAG = "QoTD_Activity";
@@ -40,6 +43,7 @@ public class Journal extends AppCompatActivity {
         year = Integer.toString(cal.get(Calendar.YEAR));
 
         answer_edit = findViewById(R.id.answer);
+        tags_edit = findViewById(R.id.tags);
 
         //get Database ref
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -49,11 +53,18 @@ public class Journal extends AppCompatActivity {
         if (month.length() == 1) month = "0"+month;
         if (day.length() == 1) day = "0"+day;
         String date = month+"-"+day+"-"+year;
-
-        //Save the answer
+//
+//        //Save the answer
         answer = answer_edit.getText().toString();
+        tag_string = tags_edit.getText().toString();
+        tags = tag_string.split("\\s*,\\s*");
         if (!answer.equals("")) {
             mDatabase.child("Users").child(user.getUid()).child(date).child("Journal").child("answer").setValue(answer);
+            if(tags.length>0) {
+                for (int i = 0; i < tags.length; i++) {
+                    mDatabase.child("Users").child(user.getUid()).child(tags[i]).child(date).setValue(true);
+                }
+            }
             Toast.makeText(getApplicationContext(), "Journal submitted!", Toast.LENGTH_SHORT).show();
         }
         else {

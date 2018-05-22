@@ -45,6 +45,9 @@ public class SplashActivity extends Activity {
         if (user != null) {
             goToNextActivity();
         }
+        else {
+            startSignIn();
+        }
     }
     private void startQoTD() {
         mDatabase.child("Questions").child(month).child(day).addListenerForSingleValueEvent(
@@ -65,6 +68,7 @@ public class SplashActivity extends Activity {
                             Intent QoTD = new Intent(SplashActivity.this,QoTD.class);
                             QoTD.putExtra("question",question);
                             startActivity(QoTD);
+                            finish();
                         }
                     }
 
@@ -78,9 +82,17 @@ public class SplashActivity extends Activity {
     private void startJournal() {
         Intent Journal = new Intent(SplashActivity.this,Journal.class);
         startActivity(Journal);
+        finish();
     }
 
+
+    private void startSignIn() {
+        Intent SignIn = new Intent(SplashActivity.this,SignInRegister.class);
+        startActivity(SignIn);
+        finish();
+    }
     private void goToNextActivity() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
         Log.i(TAG,"Signed in: "+user.getUid());
 
         mDatabase.child("Users").child(user.getUid()).child(date).child("QoTD").child("answer").addListenerForSingleValueEvent(

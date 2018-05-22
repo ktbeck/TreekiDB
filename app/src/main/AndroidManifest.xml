@@ -16,7 +16,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".SignInRegister">
         </activity>
-        <activity android:name=".Journal" />
+        <activity android:name=".Journal" >
+        </activity>
         <activity android:name=".SplashActivity"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
